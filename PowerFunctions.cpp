@@ -53,7 +53,7 @@ void PowerFunctions::start_stop_bit()
   delayMicroseconds(START_STOP); // Extra pause for start_stop_bit
 }
 
-void PowerFunctions::write_bit() {
+void PowerFunctions::send_bit() {
   for(uint8_t i = 0; i < 6; i++) {
     digitalWrite(_pin, HIGH);
     delayMicroseconds(13);
