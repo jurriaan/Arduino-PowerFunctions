@@ -12,7 +12,10 @@ PowerFunctions	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-single_output	KEYWORD2
+single_pwm	KEYWORD2
+combo_pwm	KEYWORD2
+red_pwm	KEYWORD2
+blue_pwm	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

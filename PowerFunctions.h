@@ -10,9 +10,12 @@
 #define SINGLE_OUTPUT 0x4
 #define ESCAPE 0x4
 
-#define START_STOP 1014
-#define HIGH_PAUSE 546
-#define LOW_PAUSE 260
+#define IR_CYCLES(num) (uint16_t) ((1.0/38000.0) * 1000 * 1000 * num)
+
+#define START_STOP IR_CYCLES(39)
+#define HIGH_PAUSE IR_CYCLES(21)
+#define LOW_PAUSE IR_CYCLES(10)
+#define HALF_PERIOD IR_CYCLES(0.5)
 
 //PWM speed steps
 #define PWM_FLT 0x0
@@ -53,9 +56,11 @@ class PowerFunctions
 	public:
   	PowerFunctions(uint8_t, uint8_t);
     void single_pwm(uint8_t, uint8_t);
+    void red_pwm(uint8_t);
+    void blue_pwm(uint8_t);
     void combo_pwm(uint8_t, uint8_t);
 
-  protected:
+  private:
     void pause(uint8_t);
     void send_bit();
     void send();

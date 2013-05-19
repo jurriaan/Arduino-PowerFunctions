@@ -11,32 +11,43 @@
 #include "PowerFunctions.h"
 #include "Arduino.h"
 
+// Aliases
+void PowerFunctions::red_pwm(uint8_t pwm) { single_pwm(RED, pwm); }
+void PowerFunctions::blue_pwm(uint8_t pwm) { single_pwm(BLUE, pwm); }
+
+// Constructor
 PowerFunctions::PowerFunctions(uint8_t pin, uint8_t channel)
 {
   _channel = channel;
-  _toggle = 0x8;
+  _toggle = 0;
   _pin = pin;
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, LOW);
 }
 
+// Single output mode PWM
 void PowerFunctions::single_pwm(uint8_t output, uint8_t pwm) {
-  toggle();
   _nib1 = _toggle | _channel;
   _nib2 = SINGLE_OUTPUT | output;
   _nib3 = pwm;
   send();
+  toggle();
 }
 
+// Combo PWM mode
 void PowerFunctions::combo_pwm(uint8_t blue_speed, uint8_t red_speed)
 {
-  //set nibs
   _nib1 = ESCAPE | _channel;
   _nib2 = blue_speed;
   _nib3 = red_speed;
   send();
 }
 
+//
+// Private methods
+//
+
+// Pause function see "Transmitting Messages" in Power Functions PDF
 void PowerFunctions::pause(uint8_t count)
 {
   uint8_t pause = 0;
@@ -51,18 +62,20 @@ void PowerFunctions::pause(uint8_t count)
   delayMicroseconds(pause * 77);
 }
 
+// Send the start/stop bit
 void PowerFunctions::start_stop_bit()
 {
   send_bit();
   delayMicroseconds(START_STOP); // Extra pause for start_stop_bit
 }
 
+// Send a bit
 void PowerFunctions::send_bit() {
   for(uint8_t i = 0; i < 6; i++) {
     digitalWrite(_pin, HIGH);
-    delayMicroseconds(13);
+    delayMicroseconds(HALF_PERIOD);
     digitalWrite(_pin, LOW);
-    delayMicroseconds(13);
+    delayMicroseconds(HALF_PERIOD);
   }
 }
 
