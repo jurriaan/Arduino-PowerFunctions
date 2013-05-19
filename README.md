@@ -1,8 +1,8 @@
 # Lego Power Functions Infrared Control for Arduino
 
 This is a Arduino Lego Power Functions Library.
-For now it only supports single output PWM.
-Based on [SuperCow's code](http://forum.arduino.cc/index.php?topic=38142.0)
+For now it only supports single/combo PWM.
+Based on [SuperCow's code](http://forum.arduino.cc/index.php?topic=38142.msg282833#msg282833)
 
 ## Protocol
 

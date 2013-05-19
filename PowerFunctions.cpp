@@ -4,6 +4,9 @@
 // Based on SuperCow's code (http://forum.arduino.cc/index.php?topic=38142.0)
 //
 
+#define toggle() _toggle ^= 0x8
+#define CHECKSUM() (0xf ^ _nib1 ^ _nib2 ^ _nib3)
+
 #include <stdlib.h>
 #include "PowerFunctions.h"
 #include "Arduino.h"
@@ -17,20 +20,21 @@ PowerFunctions::PowerFunctions(uint8_t pin, uint8_t channel)
   digitalWrite(_pin, LOW);
 }
 
-void PowerFunctions::single_output(uint8_t output, uint8_t pwm) {
-  uint8_t nib1, nib2, nib3, nib4, i;
+void PowerFunctions::single_pwm(uint8_t output, uint8_t pwm) {
+  toggle();
+  _nib1 = _toggle | _channel;
+  _nib2 = SINGLE_OUTPUT | output;
+  _nib3 = pwm;
+  send();
+}
 
-  _toggle ^= 0x8;
-  nib1 = _toggle | _channel;
-  nib2 = SINGLE_OUTPUT | output;
-  nib3 = pwm;
-  nib4 = 0xf ^ nib1 ^ nib2 ^ nib3;
-
-  for(i = 0; i < 6; i++)
-  {
-    pause(i);
-    send(nib1 << 12 | nib2 << 8 | nib3 << 4 | nib4);
-  }
+void PowerFunctions::combo_pwm(uint8_t blue_speed, uint8_t red_speed)
+{
+  //set nibs
+  _nib1 = ESCAPE | _channel;
+  _nib2 = blue_speed;
+  _nib3 = red_speed;
+  send();
 }
 
 void PowerFunctions::pause(uint8_t count)
@@ -38,7 +42,7 @@ void PowerFunctions::pause(uint8_t count)
   uint8_t pause = 0;
 
   if(count == 0) {
-    pause = 4 - _channel + 1;
+    pause = 4 - (_channel + 1);
   } else if(count < 3) { // 1, 2
     pause = 5;
   } else {  // 3, 4, 5
@@ -62,13 +66,18 @@ void PowerFunctions::send_bit() {
   }
 }
 
-void PowerFunctions::send(uint16_t message)
+void PowerFunctions::send()
 {
-  start_stop_bit();
-  for(uint8_t i = 0;i < 16;i++) {
-    send_bit();
-    delayMicroseconds((0x8000 & (message << i)) != 0 ? HIGH_PAUSE : LOW_PAUSE);
+  uint8_t i, j;
+  uint16_t message = _nib1 << 12 | _nib2 << 8 | _nib3 << 4 | CHECKSUM();
+  for(i = 0; i < 6; i++)
+  {
+    pause(i);
+    start_stop_bit();
+    for(j = 0; j < 16; i++) {
+      send_bit();
+      delayMicroseconds((0x8000 & (message << j)) != 0 ? HIGH_PAUSE : LOW_PAUSE);
+    }
+    start_stop_bit();
   }
-  start_stop_bit();
-  delay(5);
 }

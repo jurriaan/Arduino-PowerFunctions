@@ -13,9 +13,9 @@ void loop() {
 }
 
 void step(uint8_t output, uint8_t pwm,  uint16_t time) {
-  pf.single_output(output, pwm);
+  pf.single_pwm(output, pwm);
   delay(time);
-  pf.single_output(output, PWM_BRK);
+  pf.single_pwm(output, PWM_BRK);
   delay(30);
-  pf.single_output(output, PWM_FLT);
+  pf.single_pwm(output, PWM_FLT);
 }
