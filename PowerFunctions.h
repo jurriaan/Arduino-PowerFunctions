@@ -16,6 +16,7 @@
 #define HIGH_PAUSE IR_CYCLES(21)
 #define LOW_PAUSE IR_CYCLES(10)
 #define HALF_PERIOD IR_CYCLES(0.5)
+#define MAX_MESSAGE_LENGTH IR_CYCLES(522) // 2 * 45 + 16 * 27
 
 //PWM speed steps
 #define PWM_FLT 0x0

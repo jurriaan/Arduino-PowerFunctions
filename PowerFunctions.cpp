@@ -59,7 +59,7 @@ void PowerFunctions::pause(uint8_t count)
   } else {  // 3, 4, 5
     pause = 5 + (_channel + 1) * 2;
   }
-  delayMicroseconds(pause * 77);
+  delayMicroseconds(pause * 77); //MAX_MESSAGE_LENGTH
 }
 
 // Send the start/stop bit
@@ -87,10 +87,11 @@ void PowerFunctions::send()
   {
     pause(i);
     start_stop_bit();
-    for(j = 0; j < 16; i++) {
+    for(j = 0; j < 16; j++) {
       send_bit();
       delayMicroseconds((0x8000 & (message << j)) != 0 ? HIGH_PAUSE : LOW_PAUSE);
     }
     start_stop_bit();
+
   }
 }
