@@ -92,6 +92,5 @@ void PowerFunctions::send()
       delayMicroseconds((0x8000 & (message << j)) != 0 ? HIGH_PAUSE : LOW_PAUSE);
     }
     start_stop_bit();
-
   }
 }
