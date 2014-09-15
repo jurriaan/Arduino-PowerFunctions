@@ -34,6 +34,22 @@ void PowerFunctions::single_pwm(uint8_t output, uint8_t pwm) {
   toggle();
 }
 
+void PowerFunctions::single_increment(uint8_t output){
+  _nib1 = _toggle | _channel;
+  _nib2 = SINGLE_EXT | output;
+  _nib3 = 0x4;
+  send();
+  toggle();
+}
+
+void PowerFunctions::single_decrement(uint8_t output){
+  _nib1 = _toggle | _channel;
+  _nib2 = SINGLE_EXT | output;
+  _nib3 = 0x5;
+  send();
+  toggle();
+}
+
 // Combo PWM mode
 void PowerFunctions::combo_pwm(uint8_t blue_speed, uint8_t red_speed)
 {

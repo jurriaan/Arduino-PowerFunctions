@@ -8,6 +8,7 @@
 #define SINGLE_PIN_CONTINUOUS 0x2
 #define SINGLE_PIN_TIMEOUT 0x3
 #define SINGLE_OUTPUT 0x4
+#define SINGLE_EXT 0x6
 #define ESCAPE 0x4
 
 #define IR_CYCLES(num) (uint16_t) ((1.0/38000.0) * 1000 * 1000 * num)
@@ -57,6 +58,8 @@ class PowerFunctions
 	public:
   	PowerFunctions(uint8_t, uint8_t);
     void single_pwm(uint8_t, uint8_t);
+    void single_increment(uint8_t);
+    void single_decrement(uint8_t);
     void red_pwm(uint8_t);
     void blue_pwm(uint8_t);
     void combo_pwm(uint8_t, uint8_t);
