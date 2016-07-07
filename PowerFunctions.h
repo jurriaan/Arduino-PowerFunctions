@@ -63,6 +63,7 @@ class PowerFunctions
     void red_pwm(uint8_t);
     void blue_pwm(uint8_t);
     void combo_pwm(uint8_t, uint8_t);
+    void send_beacon();
 
   private:
     void pause(uint8_t);
