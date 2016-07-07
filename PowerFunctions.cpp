@@ -59,6 +59,14 @@ void PowerFunctions::combo_pwm(uint8_t blue_speed, uint8_t red_speed)
   send();
 }
 
+void PowerFunctions::send_beacon()
+{
+  _nib1 = ESCAPE | _channel;
+  _nib2 = 0x0;
+  _nib3 = 0x0;
+  send();
+}
+
 //
 // Private methods
 //
