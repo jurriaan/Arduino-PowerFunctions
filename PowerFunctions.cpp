@@ -26,7 +26,7 @@ PowerFunctions::PowerFunctions(uint8_t pin, uint8_t channel)
   digitalWrite(_pin, LOW);
   if(_debug){
      pinMode(LED_BUILTIN, OUTPUT);
-     digitalWrite(LED_BUILTIN, LOW);
+     digitalWrite(LED_BUILTIN, HIGH);
   }
 }
 

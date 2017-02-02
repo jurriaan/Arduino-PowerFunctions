@@ -24,12 +24,13 @@ void vararg(uint8_t  commands...) {
 */
 
 void setup() {
-
-  
+  Serial.begin(9600);
+  Serial.println(F("READY"));
 }
 
 
 void goForward(uint16_t time){
+  //Serial.println(F("FORWARD"));
   pf.combo_pwm(PWM_FWD2, PWM_REV2);
   delay(time);
   pf.combo_pwm(PWM_BRK,PWM_BRK);
@@ -38,6 +39,7 @@ void goForward(uint16_t time){
 
 
 void goBackward(uint16_t time){
+  //Serial.println(F("BACKWARD"));
   pf.combo_pwm(PWM_REV2, PWM_FWD2);
   delay(time);
   pf.combo_pwm(PWM_BRK,PWM_BRK);
@@ -48,7 +50,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   goForward(1500);
   goBackward(500);
-  while(true) { delay(1000); }
+  //while(true) { delay(1000); }
   
 }
 
