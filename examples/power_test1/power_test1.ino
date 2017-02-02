@@ -6,20 +6,26 @@
 /*** 
  * This demo uses an arduino to drive a 
  * LEGO RC Tracked Racer 42065
- * To drive it you must give inverted command in sync.
  * We go forward a bit then backward
+ * This is only a test sketch to test infrared-circuit on pin 12
+ * DEfault channel is 1 (Channel 'Zero' on pdf)
  */
 
 PowerFunctions pf(12, 0);
 
+/* See http://en.cppreference.com/w/cpp/utility/variadic
 
-int j=0;
+void vararg(uint8_t  commands...) {
+      va_list args;
+      va_start(args, commands);
+      uint8_t current=va_arg(args,uint8_t);      
+      va_end(args);
+}
+*/
+
 void setup() {
-  // put your setup code here, to run once:
-  // a functional object that will increment any type
-  //auto incr = [](auto x) { return x++; };  
-  //auto i =0;
-  // incr(i);
+
+  
 }
 
 
@@ -43,12 +49,6 @@ void loop() {
   goForward(1500);
   goBackward(500);
   while(true) { delay(1000); }
-
-  // Now try to do a 90 angle with a moderate speed
-  pf.combo_pwm(PWM_BRK,PWM_BRK);  
-  pf.combo_pwm(PWM_REV5,PWM_BRK);
-  deplay(500);
-  pf.combo_pwm(PWM_BRK,PWM_BRK);    
   
 }
 

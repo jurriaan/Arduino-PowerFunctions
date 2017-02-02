@@ -14,10 +14,14 @@ See [example](https://github.com/jurriaan/Arduino-PowerFunctions/blob/master/exa
 
 ## Standalone Compile (optional)
 The [Arduino Makefile project](https://github.com/sudar/Arduino-Makefile) is used for standalone compile of examples.
-Refer to arduino-makefile/Arduino.mk for instructions on how to configure it.
-use
- make help
-to get a list of commands.
+Refer to arduino-makefile/Arduino.mk for instructions on how to
+configure it.
+Under windows, try to define a user variable like
+ `setx ARDUINO_DIR  C:/Arduino`
+
+Then to get a list of supported command issue
+
+`make help`
 
 
 
