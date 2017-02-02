@@ -56,7 +56,7 @@
 class PowerFunctions
 {
 	public:
-  	PowerFunctions(uint8_t, uint8_t);
+  PowerFunctions(uint8_t, uint8_t);
     void single_pwm(uint8_t, uint8_t);
     void single_increment(uint8_t);
     void single_decrement(uint8_t);
@@ -69,10 +69,14 @@ class PowerFunctions
     void send_bit();
     void send();
     void start_stop_bit();
+
+    void toggle();
+    
     uint8_t _channel;
     uint8_t _pin;
     uint8_t _nib1, _nib2, _nib3;
     uint8_t _toggle;
+    bool    _debug;
 };
 
 #endif
