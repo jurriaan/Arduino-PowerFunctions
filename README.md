@@ -23,6 +23,8 @@ Then to get a list of supported command issue
 
 `make help`
 
+Also, you can spped up large project construction with the GNU Make
+"-j option" to make a parallel build.
 
 
 (c) 2013 Jurriaan Pruis
