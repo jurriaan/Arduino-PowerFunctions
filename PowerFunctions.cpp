@@ -16,12 +16,12 @@ void PowerFunctions::red_pwm(uint8_t pwm) { single_pwm(RED, pwm); }
 void PowerFunctions::blue_pwm(uint8_t pwm) { single_pwm(BLUE, pwm); }
 
 // Constructor
-PowerFunctions::PowerFunctions(uint8_t pin, uint8_t channel)
+PowerFunctions::PowerFunctions(uint8_t pin, uint8_t channel, bool debug)
 {
   _channel = channel;
   _toggle = 0;
   _pin = pin;
-  _debug=true; // GG: CONFIGU DEBUG MODE HERE
+  _debug=debug;
   pinMode(_pin, OUTPUT);  
   digitalWrite(_pin, LOW);
   if(_debug){

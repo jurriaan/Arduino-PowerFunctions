@@ -55,8 +55,8 @@
 
 class PowerFunctions
 {
-	public:
-  PowerFunctions(uint8_t, uint8_t);
+ public:
+   PowerFunctions(uint8_t pin, uint8_t channel, bool _debug = false);
     void single_pwm(uint8_t, uint8_t);
     void single_increment(uint8_t);
     void single_decrement(uint8_t);
