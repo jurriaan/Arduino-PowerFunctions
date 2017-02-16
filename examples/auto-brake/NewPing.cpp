@@ -280,7 +280,7 @@ void NewPing::timer_stop() { // Disable timer interrupt.
 #elif defined (__arm__) && defined (TEENSYDUINO) // Timer for Teensy 3.x
 	itimer.end();
 #else
-	TIMSK2 &= ~(1<<OCIE2A);
+	TIMSK2 &= ~(1<<OCIE2A);  /** ARDUINO UNO **/
 #endif
 }
 
@@ -304,7 +304,8 @@ void NewPing::timer_setup() {
 #elif defined (__arm__) && defined (TEENSYDUINO)
 	timer_stop(); // Stop the timer.
 #else
-	timer_stop();        // Disable Timer2 interrupt.
+        /** ARDUINO UNO PART */
+	timer_stop();        // Disable Timer2 interrupt. 
 	ASSR &= ~(1<<AS2);   // Set clock, not pin.
 	TCCR2A = (1<<WGM21); // Set Timer2 to CTC mode.
 	TCCR2B = (1<<CS22);  // Set Timer2 prescaler to 64 (4uS/count, 4uS-1020uS range).
@@ -332,7 +333,7 @@ ISR(TIMER2_COMP_vect) {
 // Do nothing...
 #else
 ISR(TIMER2_COMPA_vect) {
-	intFunc(); // Call wrapped function.
+  intFunc(); // Call wrapped function. /* GG: ARDUINO UNO */
 }
 #endif
 
