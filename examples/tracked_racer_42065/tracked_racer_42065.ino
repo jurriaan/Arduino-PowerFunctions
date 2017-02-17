@@ -7,16 +7,18 @@
  * This demo uses an arduino to drive a 
  * LEGO RC Tracked Racer 42065
  * To drive it you must give inverted command in sync.
- * We go forward a bit then backward
+ * 
  */
 
-PowerFunctions pf(12, 0);
+PowerFunctions pf(12, 0,true /* <= Enable debug mode? */); 
 
 
 int j=0;
 void setup() {
   // put your setup code here, to run once:  
 }
+
+
 
 
 void goForward(uint16_t time){
@@ -36,6 +38,38 @@ void turn90Degrees(){
   pf.combo_pwm(PWM_BRK,PWM_BRK);    
 }
 
+
+
+
+
+void step(uint8_t output, uint8_t pwm,  uint16_t time) {
+  pf.single_pwm(output, pwm);
+  delay(time);
+  pf.single_pwm(output, PWM_BRK);
+  delay(30);
+  pf.single_pwm(output, PWM_FLT);
+}
+
+
+/////////////
+void zigZag(uint16_t msTime){
+  unsigned long startTime=millis();
+  do {
+    // Zig to left
+    pf.combo_pwm(PWM_FWD4, PWM_REV2);
+
+    delay(400);    
+    goForward(1500);
+    
+    // Zig to right
+    pf.combo_pwm(PWM_FWD2, PWM_REV4);
+    
+    delay(400);    
+    goForward(1500);
+    
+  }while ((millis()-startTime) < msTime);
+}
+
 void loop() {
   /* Make a Square: 
    */
@@ -49,19 +83,7 @@ void loop() {
   goForward(1200);
   turn90Degrees();
   goForward(1200);
-  
+
+  zigZag(10000);
   
 }
-
-
-
-
-
-void step(uint8_t output, uint8_t pwm,  uint16_t time) {
-  pf.single_pwm(output, pwm);
-  delay(time);
-  pf.single_pwm(output, PWM_BRK);
-  delay(30);
-  pf.single_pwm(output, PWM_FLT);
-}
-

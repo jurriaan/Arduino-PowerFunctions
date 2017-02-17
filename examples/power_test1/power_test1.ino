@@ -13,15 +13,6 @@
 
 PowerFunctions pf(12, 0);
 
-/* See http://en.cppreference.com/w/cpp/utility/variadic
-
-void vararg(uint8_t  commands...) {
-      va_list args;
-      va_start(args, commands);
-      uint8_t current=va_arg(args,uint8_t);      
-      va_end(args);
-}
-*/
 
 void setup() {
   Serial.begin(9600);

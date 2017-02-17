@@ -36,7 +36,7 @@ const int MaxDistCm = 400;
 //#define log(x)
 
 
-PowerFunctions powerFunction(12, 0);
+PowerFunctions powerFunction(12, 0, /*debug=*/ true);
 NewPing sonar(triggerPort, echoPort, MaxDistCm);
 
 void setup() {
