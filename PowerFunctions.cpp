@@ -1,10 +1,10 @@
-//
+// -*- mode:c++; mode: flymake -*-
 // Lego Power Functions Infrared Control for Arduino
 // see http://www.philohome.com/pf/LEGO_Power_Functions_RC_v120.pdf for more info
 // Based on SuperCow's code (http://forum.arduino.cc/index.php?topic=38142.0)
 //
 
-#define toggle() _toggle ^= 0x8
+// By spec CHECKSUM is a XOR based on the 4-bit triplet you are sending
 #define CHECKSUM() (0xf ^ _nib1 ^ _nib2 ^ _nib3)
 
 #include <stdlib.h>
@@ -16,14 +16,21 @@ void PowerFunctions::red_pwm(uint8_t pwm) { single_pwm(RED, pwm); }
 void PowerFunctions::blue_pwm(uint8_t pwm) { single_pwm(BLUE, pwm); }
 
 // Constructor
-PowerFunctions::PowerFunctions(uint8_t pin, uint8_t channel)
+PowerFunctions::PowerFunctions(uint8_t pin, uint8_t channel, bool debug)
 {
   _channel = channel;
   _toggle = 0;
   _pin = pin;
-  pinMode(_pin, OUTPUT);
+  _debug=debug;
+  pinMode(_pin, OUTPUT);  
   digitalWrite(_pin, LOW);
+  if(_debug){
+     pinMode(LED_BUILTIN, OUTPUT);
+     digitalWrite(LED_BUILTIN, HIGH);
+  }
 }
+
+
 
 // Single output mode PWM
 void PowerFunctions::single_pwm(uint8_t output, uint8_t pwm) {
@@ -99,6 +106,7 @@ void PowerFunctions::send()
 {
   uint8_t i, j;
   uint16_t message = _nib1 << 12 | _nib2 << 8 | _nib3 << 4 | CHECKSUM();
+  bool flipDebugLed=false;
   for(i = 0; i < 6; i++)
   {
     pause(i);
@@ -106,7 +114,19 @@ void PowerFunctions::send()
     for(j = 0; j < 16; j++) {
       send_bit();
       delayMicroseconds((0x8000 & (message << j)) != 0 ? HIGH_PAUSE : LOW_PAUSE);
+      if(_debug) {
+        if(flipDebugLed) {
+          digitalWrite(LED_BUILTIN, LOW);
+        } else {
+          digitalWrite(LED_BUILTIN, HIGH);
+        }
+        flipDebugLed = !flipDebugLed;   
+      }
     }
     start_stop_bit();
-  }
+  } // for
+}
+
+inline void PowerFunctions::toggle(){
+  _toggle ^= 0x8;
 }
