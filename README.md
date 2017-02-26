@@ -34,20 +34,6 @@ This project [is able to decode IR protocol](https://raw.githubusercontent.com/m
 The [New Ping library give you some insight about how the ping code was optimized](https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home)
 
 
-## IR Leds
-TOOGOO (R) 10pz 8 mm LED diodo ad emissione luminosa infrarossi IR
-Descrizione prodotto 
-Descrizione: 
-Tensione: 1,3-1,6 V 
-corrente: 20 mA (Arduino UNO DC courrent for I/O pins is 20mA)
-Lunghezza d'onda: 850 nm 
-Potenza: 180MW
-Angolo di visione: 30 gradi 
-luce Colore: infrarossi 
-Diametro: 8 millimetri 
-lunghezza totale: Circa 1.42 pollici / 3,6 cm 
-Il pacchetto include
-10pz LED emettitore IR 8 millimetri
 
 
 ## References
